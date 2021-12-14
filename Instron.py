@@ -76,12 +76,14 @@ for filename in os.listdir(directory):
     
     df_elastic = df.loc[(df['strain'] < 0.01)]
     df_elastic = df_elastic.loc[(df_elastic['strain'] > 0.005)]
+    df_preyield = df.loc[(df['strain'] < 0.05)]
+    
     #print(df_elastic)
     #plt.plot(df_elastic['strain'],df_elastic['stress'], c=color_map[tfk])
     slopes = df_elastic.apply(lambda x: np.polyfit(df_elastic['strain'], x, 1))
     #print(slopes['stress'][0])
 
-    data = data.append({'filename' : filename, 'TFK': tfk, 'Toughness': s['stress'], 'Elong_at_break' : elong_at_break, 'UTensileStr': df['stress'].max(), 'E': slopes['stress'][0]}, ignore_index=True)
+    data = data.append({'filename' : filename, 'TFK': tfk, 'Toughness': s['stress'], 'Elong_at_break' : elong_at_break, 'UTensileStr': df_preyield['stress'].max(), 'E': slopes['stress'][0]}, ignore_index=True)
     
     
     
